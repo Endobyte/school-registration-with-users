@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const courseController = require('../controllers/courseController.js');
 const studentController = require('../controllers/studentController.js');
+const userController = require('../controllers/userController.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,7 +17,6 @@ router.get('/courses/add', courseController.renderAddForm);
 router.post('/courses/add', courseController.addCourse);
 router.get('/courses/delete/:id', courseController.deleteCourse);
 
-
 router.get('/students', studentController.viewAll);
 router.get('/students/profile/:id', studentController.viewProfile);
 router.get('/students/edit/:id', studentController.renderEditForm);
@@ -30,5 +30,8 @@ router.get('/students/:studentId/removeCourse/:courseId', studentController.remo
 router.post('/courses/:courseId/enroll', courseController.enrollStudent);
 router.get('/courses/:courseId/removeStudent/:studentId', courseController.removeStudent);
 
+router.get('/register-student', userController.renderStudentRegistrationForm);
+router.get('/login', userController.renderLoginForm);
+router.post('/register-student', userController.registerStudent);
 
 module.exports = router;
