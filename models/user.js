@@ -15,12 +15,25 @@ module.exports = (sequelize, DataTypes) => {
         as: 'student',
         foreignKey: 'user_id'
       })
+      User.hasOne(models.Staff, {
+        as: 'staff',
+        foreignKey: 'user_id'
+      })
     }
   };
   User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    displayName: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        if (this.student) {
+          return this.student.first_name;
+        };
+        return this.staff.first_name;
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',
