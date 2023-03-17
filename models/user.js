@@ -20,7 +20,22 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       })
     }
-  };
+    can(action) {
+      let allowedActions;
+      if (this.role === 'staff') {
+        allowedActions = ['add course', 'edit course', 'delete course', 'view students', 'view student profiles', 'enroll student', 'drop student', 'delete student']
+      } else {
+        allowedActions = ['view self', 'enroll self', 'drop self', 'edit self']
+      }
+      return allowedActions.indexOf(action) !== -1
+    }
+    matchesStudentId(id) {
+      if (!this.student) {
+        return false;
+      }
+      return this.student.id === id;
+    };
+  }
   User.init({
     email: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -30,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       get() {
         if (this.student) {
           return this.student.first_name;
-        };
+        }
         return this.staff.first_name;
       }
     }

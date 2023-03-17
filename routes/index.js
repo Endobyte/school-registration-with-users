@@ -10,7 +10,7 @@ function redirectGuests(req, res, next) {
     return
   }
   next();
-};
+}
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -29,8 +29,6 @@ router.get('/students', redirectGuests, studentController.viewAll);
 router.get('/students/profile/:id', redirectGuests, studentController.viewProfile);
 router.get('/students/edit/:id', redirectGuests, studentController.renderEditForm);
 router.post('/students/edit/:id', studentController.updateStudent);
-router.get('/students/add', redirectGuests, studentController.renderAddForm);
-router.post('/students/add', studentController.addStudent);
 router.get('/students/delete/:id', redirectGuests, studentController.deleteStudent);
 
 router.post('/students/:studentId/enroll/', studentController.enrollStudent);
